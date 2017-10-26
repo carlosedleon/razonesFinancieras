@@ -7,8 +7,8 @@
 
     <style type="text/css">
     	.navbar-default {
-		  background-color: #36497A;
-		  border-color: #36497A;
+		  background-color: #383949;
+		  border-color: #383949;
 		}
 		.navbar-default .navbar-brand {
 		  color: #ffffff;
@@ -320,8 +320,51 @@
 			</table>
 		</div><br>
 
-		<div class="container divs" id="div_Liquidez" style="display:none;">
-			<h1>Liquidez</h1>
+		<div class="container divs" id="div_Liquidez" style="display:none;"><br>
+			<span>Las razones de liquidez se refieren a la facilidad con la que la empresa puede pagar sus cuentas</span><br><br>
+
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Periodo</th>
+						<th>Primer Periodo</th>
+						<th>Segundo Periodo</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+						<td>Capital neto de trabajo</td>
+						<td>2,000</td>
+						<td>1,800</td>
+					</tr>
+					<tr>
+						<td>Índice de solvencia</td>
+						<td>1.8</td>
+						<td>1.692</td>
+					</tr>
+					<tr>
+						<td>Prueba ácida</td>
+						<td>1.4</td>
+						<td>1.269</td>
+					</tr>
+					<tr>
+						<td>Rotación de inventarios</td>
+						<td>5</td>
+						<td>4.667</td>
+					</tr>
+					<tr>
+						<td>Rotación de cartera</td>
+						<td>0.881</td>
+						<td>0.898</td>
+					</tr>
+					<tr>
+						<td>Rotación de cuentas por pagar</td>
+						<td>0.525</td>
+						<td>0.505</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 
 		<div class="container divs" id="div_Endeudamiento" style="display:none;">

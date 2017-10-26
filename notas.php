@@ -7,8 +7,8 @@
 
     <style type="text/css">
     	.navbar-default {
-		  background-color: #36497A;
-		  border-color: #36497A;
+		  background-color: #383949;
+		  border-color: #383949;
 		}
 		.navbar-default .navbar-brand {
 		  color: #ffffff;
