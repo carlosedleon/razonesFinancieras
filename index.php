@@ -160,25 +160,25 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-4">
-					<h4>Primer periodo</h4>
+					<h3>Primer periodo</h3>
 					<label>Inicio</label><br>
 					<input type="date" name=""><br><br>
 					<label>Fin</label><br>
 					<input type="date" name=""><br><br>
-					<span><input type="checkbox" id="cbox1" value="first_checkbox"> Ver primer periodo en resultados</span>
+					<span><input type="checkbox" id="cbox1" value="first_checkbox"> Ver primer periodo en resultados</span><br><br>
 				</div>
 
 				<div class="col-sm-4">
-					<h4>Segundo periodo</h4>
+					<h3>Segundo periodo</h3>
 					<label>Inicio</label><br>
 					<input type="date" name=""><br><br>
 					<label>Fin</label><br>
 					<input type="date" name=""><br><br>
-					<span><input type="checkbox" id="cbox1" value="second_checkbox"> Ver primer periodo en resultados</span>
+					<span><input type="checkbox" id="cbox1" value="second_checkbox"> Ver primer periodo en resultados</span><br><br>
 				</div>
 
 				<div class="col-sm-4">
-					<h4>Funciones</h4>
+					<h3>Funciones</h3>
 					<!--*** SELECCIONAMOS LA SECCION A EDITAR ***-->
 		      		<select id="cmb_seccion" name="cmb_seccion" class="form-control" onchange="mostrar(this);">
 		      			<option id="vacio" name="vacio" value="vacio">Seleccione una opción</option>
@@ -190,11 +190,135 @@
 					</select>
 				</div>
 			</div>
-		</div><br>
+		</div><hr>
 
 		<div class="container divs" id="div_Financieros" style="display:none;">
-			<h1>Financieros</h1>
-		</div>
+			<h1>Pollitos en Fuga S.A.</h1>
+			<span>Estados Financieros para el año que termina el Dec 31, 2015</span><br><br>
+
+			<h2>Estado de resultados</h2>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Periodo</th>
+						<th>Primer Periodo</th>
+						<th>Segundo Periodo</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+						<td>Ventas</td>
+						<td>10000</td>
+						<td>12000</td>
+					</tr>
+					<tr>
+						<td>Costo de Ventas</td>
+						<td>6,000</td>
+						<td>7,000</td>
+					</tr>
+					<tr>
+						<td>Utilidad bruta</td>
+						<td>4,000</td>
+						<td>5,000</td>
+					</tr>
+					<tr>
+						<td>Gastos de operación</td>
+						<td>2,500</td>
+						<td>2,600</td>
+					</tr>
+					<tr>
+						<td>Ut. antes int. e imp.</td>
+						<td>1,500</td>
+						<td>2,500</td>
+					</tr>
+					<tr>
+						<td>Gastos financieros</td>
+						<td>500</td>
+						<td>450</td>
+					</tr>
+					<tr>
+						<td>Utilidad neta</td>
+						<td><strong>1,000</strong></td>
+						<td><strong>1,950</strong></td>
+					</tr>
+				</tbody>
+			</table><br><br>
+
+			<h2>Balance general</h2>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Periodo</th>
+						<th>Primer Periodo</th>
+						<th>Segundo Periodo</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+						<td>Efectivo</td>
+						<td>2,000</td>
+						<td>2,100</td>
+					</tr>
+					<tr>
+						<td>Cuentas por cobrar</td>
+						<td>1,500</td>
+						<td>1,200</td>
+					</tr>
+					<tr>
+						<td>Inventarios</td>
+						<td>1,000</td>
+						<td>1,100</td>
+					</tr>
+					<tr>
+						<td>Total activo circulante</td>
+						<td>4,500</td>
+						<td>4,400</td>
+					</tr>
+					<tr>
+						<td>Activo fijo neto</td>
+						<td>8,000</td>
+						<td>8,500</td>
+					</tr>
+					<tr>
+						<td>Total activo</td>
+						<td>12,500</td>
+						<td>12,900</td>
+					</tr>
+					<tr>
+						<td>Pasivo circultante</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Cuentas por pagar</td>
+						<td>2,500</td>
+						<td>2,600</td>
+					</tr>
+					<tr>
+						<td>Pasivo a largo plazo</td>
+						<td>7,500</td>
+						<td>7,800</td>
+					</tr>
+					<tr>
+						<td>Total pasivo</td>
+						<td>10,000</td>
+						<td>10,400</td>
+					</tr>
+					<tr>
+						<td>Patrimonio</td>
+						<td>2,500</td>
+						<td>2,300</td>
+					</tr>
+					<tr>
+						<td>Total pasivo</td>
+						<td>12,500</td>
+						<td>12,700</td>
+					</tr>
+				</tbody>
+			</table>
+		</div><br>
 
 		<div class="container divs" id="div_Liquidez" style="display:none;">
 			<h1>Liquidez</h1>
