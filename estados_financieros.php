@@ -5,6 +5,38 @@
       <?php include './inc/link.php'; ?>
     </head>
 
+        <style type="text/css">
+    	.navbar-default {
+		  background-color: #36497A;
+		  border-color: #36497A;
+		}
+		.navbar-default .navbar-brand {
+		  color: #ffffff;
+		}
+		.navbar-default .navbar-brand:hover,
+		.navbar-default .navbar-brand:focus {
+		  color: #23BE9E;
+		}
+		.navbar-default .navbar-nav > li > a {
+		  color: #ffffff;
+		}
+		.navbar-default .navbar-nav > li > a:hover,
+		.navbar-default .navbar-nav > li > a:focus {
+		  color: #23BE9E;
+		}
+		.navbar-default .navbar-nav > .active > a,
+		.navbar-default .navbar-nav > .active > a:hover,
+		.navbar-default .navbar-nav > .active > a:focus {
+		  color: #ffffff;
+		  background-color: #192430;
+		}
+    	.divs{
+    		border: 2px solid #36497A;
+    		border-radius: 10px;
+    		padding-bottom: 15px;
+    	}
+    </style>
+
     <body>
     	<nav class="navbar navbar-default">
 		    <div class="container-fluid">
@@ -24,7 +56,7 @@
 		</nav>
 
 		
-
-      <?php include './inc/footer.php'; ?>
+		
+    	<?php include './inc/footer.php'; ?>
     </body>
 </html>
