@@ -152,12 +152,7 @@
 		        </div>
 		        <ul class="nav navbar-nav">
 		            <li class="active"><a href="index.php">Periodos</a></li>
-		            <li><a href="estados_financieros.php">Estados Financieros</a></li>
-		            <li><a href="#">R de Liquidez</a></li>
-		            <li><a href="#">R de Endeudamiento</a></li>
-		            <li><a href="#">R de Rentabilidad</a></li>
-		            <li><a href="#">R de Cobertura</a></li>
-		            <li><a href="#">Indicaciones y Recursos</a></li>
+		            <li><a href="notas.php">Notas</a></li>
 		        </ul>
 		    </div>
 		</nav>
