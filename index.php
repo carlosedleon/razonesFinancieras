@@ -6,16 +6,18 @@
 <html lang="es">
     <head>
 		<title>Razones Financieras</title>
-		<?php include './inc/link.php'; ?>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="Shortcut Icon" type="image/x-icon" href="assets/icons/logo.ico" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="js/funciones.js"></script>
 		<link rel="stylesheet" type="text/css" href='./css/style.css'>
 
 		<script type="text/javascript">
-
-			function fecha(){
-				var $periodo1 = document.getElementById("periodo1_1").value;
-				var $periodo2 = document.getElementById("periodo1_2").value;
-			}
 
 			//la función recibe como parámetros el numero de la columna a ocultar 
 			function ocultarColumna(num,ver) { 
@@ -41,7 +43,7 @@
 		</script>
     </head>
 
-    <body onload="fecha()">
+    <body>
     	<nav class="navbar navbar-default">
 		    <div class="container-fluid">
 		        <div class="navbar-header">
@@ -56,14 +58,17 @@
 
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-4">
-					<h3>Primer periodo</h3>
-					<label>Inicio</label><br>
-					<input type="date" id="periodo1_1"><br><br>
-					<label>Fin</label><br>
-					<input type="date" id="periodo1_2"><br><br>
-					<span><input type="checkbox" checked="checked" id="chk_1" value="first_checkbox" onchange="ocultarColumna(1)"> Ver primer periodo en resultados</span><br><br>
-				</div>
+				<form action="index.php" method="get">
+					<div class="col-sm-4">
+						<h3>Primer periodo</h3>
+						<label>Inicio</label><br>
+						<input type="date" id="periodo1_1" name="periodo1_1"><br><br>
+						<label>Fin</label><br>
+						<input type="date" id="periodo1_2" name="periodo1_2"><br><br>
+						<span><input type="checkbox" checked="checked" id="chk_1" value="first_checkbox" onchange="ocultarColumna(1)"> Ver primer periodo en resultados</span><br><br>
+					</div>
+					<input type="submit" name="">
+				</form>
 
 				<div class="col-sm-4">
 					<h3>Segundo periodo</h3>
@@ -95,6 +100,7 @@
 
 			<h2>Estado de resultados</h2>
 			<table class="table table-hover" id="tabla">
+			
 				<thead>
 					<tr>
 						<th>Periodo</th>
@@ -106,11 +112,11 @@
 				<tbody>
 					<?php
 
-						$periodo1 = echo "document.getElementById('periodo1_1').value;";
-						$periodo2 = echo "document.getElementById('periodo1_2').value;";
+						$periodo1=$_GET['periodo1_1'];
+						$periodo2=$_GET['periodo1_2'];
 
 						//**************** FILA VENTAS *******************//
-						$ventas = "SELECT SUM(monto) FROM factura WHERE fecha between ".$periodo1." "and" ".$periodo2."";
+						$ventas = "SELECT SUM(monto) FROM factura WHERE fecha between '$periodo1' and '$periodo2'";
 						$resVentas=$conexion->query($ventas);
 
 						while ($registroVentas = $resVentas->fetch_array(MYSQLI_BOTH)){
@@ -124,7 +130,7 @@
 
 
 						//**************** FILA COSTOS *******************//
-						$costo = "SELECT SUM(costo) FROM factura";
+						$costo = "SELECT SUM(costo) FROM factura WHERE fecha between '$periodo1' and '$periodo2'";
 						$resCosto=$conexion->query($costo);
 
 						while ($registroCosto = $resCosto->fetch_array(MYSQLI_BOTH)){
@@ -138,7 +144,7 @@
 
 
 						//**************** FILA UTILIDAD BRUTA *******************//
-						$utilidad_bruta = "SELECT SUM(monto)-SUM(costo) FROM factura";
+						$utilidad_bruta = "SELECT SUM(monto)-SUM(costo) FROM factura WHERE fecha between '$periodo1' and '$periodo2'";
 						$resUtilidadBruta=$conexion->query($utilidad_bruta);
 
 						while ($registroUtilidadBruta = $resUtilidadBruta->fetch_array(MYSQLI_BOTH)){
@@ -162,7 +168,7 @@
 
 
 						//**************** FILA UT. ANTES INT *******************//
-						$utantesint = "SELECT (SUM(monto)-SUM(costo)-0)/SUM(monto) FROM factura";
+						$utantesint = "SELECT (SUM(monto)-SUM(costo)-0)/SUM(monto) FROM factura WHERE fecha between '$periodo1' and '$periodo2'";
 						$resUtAntesInt=$conexion->query($utantesint);
 
 						while ($registroUtAntesInt = $resUtAntesInt->fetch_array(MYSQLI_BOTH)){
@@ -186,7 +192,7 @@
 
 
 						//**************** FILA UTILIDAD NETA *******************//
-						$utilidadNeta = "SELECT (SUM(monto)-SUM(costo)-0-SUM(impuestos)-8500000)/SUM(monto) FROM factura";
+						$utilidadNeta = "SELECT (SUM(monto)-SUM(costo)-0-SUM(impuestos)-8500000)/SUM(monto) FROM factura WHERE fecha between '$periodo1' and '$periodo2'";
 						$resUtilidadNeta=$conexion->query($utilidadNeta);
 
 						while ($registroUtilidadNeta = $resUtilidadNeta->fetch_array(MYSQLI_BOTH)){
