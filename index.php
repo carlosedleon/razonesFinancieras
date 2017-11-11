@@ -1,148 +1,39 @@
+<?php
+    include 'library/configServer.php';
+?>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
-      <title>Razones Financieras</title>
-      <?php include './inc/link.php'; ?>
+		<title>Razones Financieras</title>
+		<?php include './inc/link.php'; ?>
+		<script type="text/javascript" src="js/funciones.js"></script>
+		<link rel="stylesheet" type="text/css" href='./css/style.css'>
+
+		<script type="text/javascript">
+			//la función recibe como parámetros el numero de la columna a ocultar 
+			function ocultarColumna(num,ver) { 
+			    //aquí utilizamos el id de la tabla, en este caso es 'tabla'
+			    fila=document.getElementById('tabla').getElementsByTagName('tr');
+
+			    //mostramos u ocultamos la cabecera de la columna 
+			    if (fila[0].getElementsByTagName('th')[num].style.display=='none'){
+			        fila[0].getElementsByTagName('th')[num].style.display=''
+			    }else{
+			        fila[0].getElementsByTagName('th')[num].style.display='none'
+			    }
+
+			    //mostramos u ocultamos las celdas de la columna seleccionada
+			    for(i=1;i<fila.length;i++){
+			        if (fila[i].getElementsByTagName('td')[num].style.display=='none'){
+			            fila[i].getElementsByTagName('td')[num].style.display='';  
+			        }else{
+			            fila[i].getElementsByTagName('td')[num].style.display='none'
+			        }       
+			    }           
+			}
+		</script>
     </head>
-
-    <style type="text/css">
-    	.navbar-default {
-		  background-color: #383949;
-		  border-color: #383949;
-		}
-		.navbar-default .navbar-brand {
-		  color: #ffffff;
-		}
-		.navbar-default .navbar-brand:hover,
-		.navbar-default .navbar-brand:focus {
-		  color: #23BE9E;
-		}
-		.navbar-default .navbar-nav > li > a {
-		  color: #ffffff;
-		}
-		.navbar-default .navbar-nav > li > a:hover,
-		.navbar-default .navbar-nav > li > a:focus {
-		  color: #23BE9E;
-		}
-		.navbar-default .navbar-nav > .active > a,
-		.navbar-default .navbar-nav > .active > a:hover,
-		.navbar-default .navbar-nav > .active > a:focus {
-		  color: #ffffff;
-		  background-color: #192430;
-		}
-    	.divs{
-    		border: 2px solid #36497A;
-    		border-radius: 10px;
-    		padding-bottom: 15px;
-    	}
-    </style>
-
-    <script type="text/javascript">
-    	function mostrar(sel) {
-    		if (sel.value=="vacio"){
-
-	           	div_Financieros = document.getElementById("div_Financieros");
-	           	div_Financieros.style.display = "none";
-
-	           	div_Liquidez = document.getElementById("div_Liquidez");
-	           	div_Liquidez.style.display = "none";
-
-	           	div_Endeudamiento = document.getElementById("div_Endeudamiento");
-	           	div_Endeudamiento.style.display = "none";
-
-	           	div_Rantabilidad = document.getElementById("div_Rantabilidad");
-	           	div_Rantabilidad.style.display = "none";
-
-	           	div_Cobertura = document.getElementById("div_Cobertura");
-	           	div_Cobertura.style.display = "none";
-
-	      	}else if (sel.value=="estados_financieros"){
-
-	           	div_Financieros = document.getElementById("div_Financieros");
-	           	div_Financieros.style.display = "";
-
-	           	div_Liquidez = document.getElementById("div_Liquidez");
-	           	div_Liquidez.style.display = "none";
-
-	           	div_Endeudamiento = document.getElementById("div_Endeudamiento");
-	           	div_Endeudamiento.style.display = "none";
-
-	           	div_Rantabilidad = document.getElementById("div_Rantabilidad");
-	           	div_Rantabilidad.style.display = "none";
-
-	           	div_Cobertura = document.getElementById("div_Cobertura");
-	           	div_Cobertura.style.display = "none";
-
-	      	}else if(sel.value=="razon_liquidez"){
-
-	           	div_Financieros = document.getElementById("div_Financieros");
-	           	div_Financieros.style.display="none";
-
-	           	div_Liquidez = document.getElementById("div_Liquidez");
-	           	div_Liquidez.style.display = "";
-
-	           	div_Endeudamiento = document.getElementById("div_Endeudamiento");
-	           	div_Endeudamiento.style.display = "none";
-
-	           	div_Rantabilidad = document.getElementById("div_Rantabilidad");
-	           	div_Rantabilidad.style.display = "none";
-
-	           	div_Cobertura = document.getElementById("div_Cobertura");
-	           	div_Cobertura.style.display = "none";
-
-	      	}else if(sel.value=="razon_endeudamiento"){
-
-	        	div_Financieros = document.getElementById("div_Financieros");
-	           	div_Financieros.style.display="none";
-
-	           	div_Liquidez = document.getElementById("div_Liquidez");
-	           	div_Liquidez.style.display = "none";
-
-	          	div_Endeudamiento = document.getElementById("div_Endeudamiento");
-	           	div_Endeudamiento.style.display = "";
-
-	           	div_Rantabilidad = document.getElementById("div_Rantabilidad");
-	           	div_Rantabilidad.style.display = "none";
-
-	           	div_Cobertura = document.getElementById("div_Cobertura");
-	           	div_Cobertura.style.display = "none";
-
-	    	}else if(sel.value=="razon_rentabilidad"){
-
-	        	div_Financieros = document.getElementById("div_Financieros");
-	           	div_Financieros.style.display="none";
-
-	           	div_Liquidez = document.getElementById("div_Liquidez");
-	           	div_Liquidez.style.display = "none";
-
-	          	div_Endeudamiento = document.getElementById("div_Endeudamiento");
-	           	div_Endeudamiento.style.display = "none";
-
-	           	div_Rantabilidad = document.getElementById("div_Rantabilidad");
-	           	div_Rantabilidad.style.display = "";
-
-	           	div_Cobertura = document.getElementById("div_Cobertura");
-	           	div_Cobertura.style.display = "none";
-
-	    	}else if(sel.value=="razon_cobertura"){
-
-	        	div_Financieros = document.getElementById("div_Financieros");
-	           	div_Financieros.style.display="none";
-
-	           	div_Liquidez = document.getElementById("div_Liquidez");
-	           	div_Liquidez.style.display = "none";
-
-	          	div_Endeudamiento = document.getElementById("div_Endeudamiento");
-	           	div_Endeudamiento.style.display = "none";
-
-	           	div_Rantabilidad = document.getElementById("div_Rantabilidad");
-	           	div_Rantabilidad.style.display = "none";
-
-	           	div_Cobertura = document.getElementById("div_Cobertura");
-	           	div_Cobertura.style.display = "";
-	    	}
-		}
-    </script>
 
     <body>
     	<nav class="navbar navbar-default">
@@ -162,10 +53,10 @@
 				<div class="col-sm-4">
 					<h3>Primer periodo</h3>
 					<label>Inicio</label><br>
-					<input type="date" name=""><br><br>
+					<input type="date" id="periodo1_1"><br><br>
 					<label>Fin</label><br>
-					<input type="date" name=""><br><br>
-					<span><input type="checkbox" id="cbox1" value="first_checkbox"> Ver primer periodo en resultados</span><br><br>
+					<input type="date" id="periodo1_2"><br><br>
+					<span><input type="checkbox" checked="checked" id="chk_1" value="first_checkbox" onchange="ocultarColumna(1)"> Ver primer periodo en resultados</span><br><br>
 				</div>
 
 				<div class="col-sm-4">
@@ -174,7 +65,7 @@
 					<input type="date" name=""><br><br>
 					<label>Fin</label><br>
 					<input type="date" name=""><br><br>
-					<span><input type="checkbox" id="cbox1" value="second_checkbox"> Ver primer periodo en resultados</span><br><br>
+					<span><input type="checkbox" checked="checked" id="chk_2" value="second_checkbox" onchange="ocultarColumna(2)"> Ver segundo periodo en resultados</span><br><br>
 				</div>
 
 				<div class="col-sm-4">
@@ -197,7 +88,7 @@
 			<span>Estados Financieros para el año que termina el Dec 31, 2015</span><br><br>
 
 			<h2>Estado de resultados</h2>
-			<table class="table table-hover">
+			<table class="table table-hover" id="tabla">
 				<thead>
 					<tr>
 						<th>Periodo</th>
@@ -207,41 +98,99 @@
 				</thead>
 
 				<tbody>
-					<tr>
-						<td>Ventas</td>
-						<td>10000</td>
-						<td>12000</td>
-					</tr>
-					<tr>
-						<td>Costo de Ventas</td>
-						<td>6,000</td>
-						<td>7,000</td>
-					</tr>
-					<tr>
-						<td>Utilidad bruta</td>
-						<td>4,000</td>
-						<td>5,000</td>
-					</tr>
-					<tr>
-						<td>Gastos de operación</td>
-						<td>2,500</td>
-						<td>2,600</td>
-					</tr>
-					<tr>
-						<td>Ut. antes int. e imp.</td>
-						<td>1,500</td>
-						<td>2,500</td>
-					</tr>
-					<tr>
-						<td>Gastos financieros</td>
-						<td>500</td>
-						<td>450</td>
-					</tr>
-					<tr>
-						<td>Utilidad neta</td>
-						<td><strong>1,000</strong></td>
-						<td><strong>1,950</strong></td>
-					</tr>
+					<?php
+
+						//**************** FILA VENTAS *******************//
+						$periodo1 = ($_GET['periodo1_1']);
+						$periodo2 = ($_GET['periodo1_2']);
+						$ventas = "SELECT SUM(monto) FROM factura WHERE fecha between '$periodo1' and '$periodo2'";
+						$resVentas=$conexion->query($ventas);
+
+						while ($registroVentas = $resVentas->fetch_array(MYSQLI_BOTH)){
+							echo'
+								<tr>
+									<td>Ventas</td>
+									<td>'.$registroVentas[0].'</td>
+									<td>'.$registroVentas[0].'</td>
+								</tr>';
+						}
+
+
+						//**************** FILA COSTOS *******************//
+						$costo = "SELECT SUM(costo) FROM factura";
+						$resCosto=$conexion->query($costo);
+
+						while ($registroCosto = $resCosto->fetch_array(MYSQLI_BOTH)){
+							echo'
+								<tr>
+									<td>Costo de ventas</td>
+									<td>'.$registroCosto[0].'</td>
+									<td>'.$registroCosto[0].'</td>
+								</tr>';
+						}
+
+
+						//**************** FILA UTILIDAD BRUTA *******************//
+						$utilidad_bruta = "SELECT SUM(monto)-SUM(costo) FROM factura";
+						$resUtilidadBruta=$conexion->query($utilidad_bruta);
+
+						while ($registroUtilidadBruta = $resUtilidadBruta->fetch_array(MYSQLI_BOTH)){
+							echo'
+								<tr>
+									<td>Utilidad bruta</td>
+									<td>'.$registroUtilidadBruta[0].'</td>
+									<td>'.$registroUtilidadBruta[0].'</td>
+								</tr>';
+						}
+
+
+						//**************** FILA GASTOS OPERACION *******************//
+
+						echo'
+							<tr>
+								<td>Gastos de operación</td>
+								<td>8500000</td>
+								<td>8500000</td>
+							</tr>';
+
+
+						//**************** FILA UT. ANTES INT *******************//
+						$utantesint = "SELECT (SUM(monto)-SUM(costo)-0)/SUM(monto) FROM factura";
+						$resUtAntesInt=$conexion->query($utantesint);
+
+						while ($registroUtAntesInt = $resUtAntesInt->fetch_array(MYSQLI_BOTH)){
+							echo'
+								<tr>
+									<td>Ut. antes int. e imp.</td>
+									<td>'.$registroUtAntesInt[0].'</td>
+									<td>'.$registroUtAntesInt[0].'</td>
+								</tr>';
+						}
+
+
+						//**************** FILA GASTOS FINANCIEROS *******************//
+
+						echo'
+							<tr>
+								<td>Gastos financieros</td>
+								<td>0</td>
+								<td>0</td>
+							</tr>';
+
+
+						//**************** FILA UTILIDAD NETA *******************//
+						$utilidadNeta = "SELECT (SUM(monto)-SUM(costo)-0-SUM(impuestos)-8500000)/SUM(monto) FROM factura";
+						$resUtilidadNeta=$conexion->query($utilidadNeta);
+
+						while ($registroUtilidadNeta = $resUtilidadNeta->fetch_array(MYSQLI_BOTH)){
+							echo'
+								<tr>
+									<td>Utilidad neta</td>
+									<td>'.$registroUtilidadNeta[0].'</td>
+									<td>'.$registroUtilidadNeta[0].'</td>
+								</tr>';
+						}
+					?>
 				</tbody>
 			</table><br><br>
 

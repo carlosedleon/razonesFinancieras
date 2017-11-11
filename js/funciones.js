@@ -1,34 +1,104 @@
 function mostrar(sel) {
-      if (sel.value=="Inicio"){
-           divInicio = document.getElementById("div_Inicio");
-           divInicio.style.display = "";
+    if (sel.value=="vacio"){
 
-           div_Reservaciones = document.getElementById("div_Reservaciones");
-           div_Reservaciones.style.display = "none";
+        div_Financieros = document.getElementById("div_Financieros");
+        div_Financieros.style.display = "none";
 
-           div_Quienessomos = document.getElementById("div_Quienessomos");
-           div_Quienessomos.style.display = "none";
+        div_Liquidez = document.getElementById("div_Liquidez");
+        div_Liquidez.style.display = "none";
 
-      }else if(sel.value=="Reservaciones"){
+        div_Endeudamiento = document.getElementById("div_Endeudamiento");
+        div_Endeudamiento.style.display = "none";
 
-           divInicio = document.getElementById("div_Inicio");
-           divInicio.style.display="none";
+        div_Rantabilidad = document.getElementById("div_Rantabilidad");
+        div_Rantabilidad.style.display = "none";
 
-           div_Reservaciones = document.getElementById("div_Reservaciones");
-           div_Reservaciones.style.display = "";
+        div_Cobertura = document.getElementById("div_Cobertura");
+        div_Cobertura.style.display = "none";
 
-           div_Quienessomos = document.getElementById("div_Quienessomos");
-           div_Quienessomos.style.display = "none";
+    }else if (sel.value=="estados_financieros"){
 
-      }else if(sel.value=="Quienes_Somos"){
+        div_Financieros = document.getElementById("div_Financieros");
+        div_Financieros.style.display = "";
 
-            divInicio = document.getElementById("div_Inicio");
-           divInicio.style.display="none";
+        div_Liquidez = document.getElementById("div_Liquidez");
+        div_Liquidez.style.display = "none";
 
-           div_Reservaciones = document.getElementById("div_Reservaciones");
-           div_Reservaciones.style.display = "none";
+        div_Endeudamiento = document.getElementById("div_Endeudamiento");
+        div_Endeudamiento.style.display = "none";
 
-           div_Quienessomos = document.getElementById("div_Quienessomos");
-           div_Quienessomos.style.display = "";
-      }
+        div_Rantabilidad = document.getElementById("div_Rantabilidad");
+        div_Rantabilidad.style.display = "none";
+
+        div_Cobertura = document.getElementById("div_Cobertura");
+        div_Cobertura.style.display = "none";
+
+    }else if(sel.value=="razon_liquidez"){
+
+        div_Financieros = document.getElementById("div_Financieros");
+        div_Financieros.style.display="none";
+
+        div_Liquidez = document.getElementById("div_Liquidez");
+        div_Liquidez.style.display = "";
+
+        div_Endeudamiento = document.getElementById("div_Endeudamiento");
+        div_Endeudamiento.style.display = "none";
+
+        div_Rantabilidad = document.getElementById("div_Rantabilidad");
+        div_Rantabilidad.style.display = "none";
+
+        div_Cobertura = document.getElementById("div_Cobertura");
+        div_Cobertura.style.display = "none";
+
+    }else if(sel.value=="razon_endeudamiento"){
+
+        div_Financieros = document.getElementById("div_Financieros");
+        div_Financieros.style.display="none";
+
+        div_Liquidez = document.getElementById("div_Liquidez");
+        div_Liquidez.style.display = "none";
+
+        div_Endeudamiento = document.getElementById("div_Endeudamiento");
+        div_Endeudamiento.style.display = "";
+
+        div_Rantabilidad = document.getElementById("div_Rantabilidad");
+        div_Rantabilidad.style.display = "none";
+
+        div_Cobertura = document.getElementById("div_Cobertura");
+        div_Cobertura.style.display = "none";
+
+    }else if(sel.value=="razon_rentabilidad"){
+
+        div_Financieros = document.getElementById("div_Financieros");
+        div_Financieros.style.display="none";
+
+        div_Liquidez = document.getElementById("div_Liquidez");
+        div_Liquidez.style.display = "none";
+
+        div_Endeudamiento = document.getElementById("div_Endeudamiento");
+        div_Endeudamiento.style.display = "none";
+
+        div_Rantabilidad = document.getElementById("div_Rantabilidad");
+        div_Rantabilidad.style.display = "";
+
+        div_Cobertura = document.getElementById("div_Cobertura");
+        div_Cobertura.style.display = "none";
+
+    }else if(sel.value=="razon_cobertura"){
+
+        div_Financieros = document.getElementById("div_Financieros");
+        div_Financieros.style.display="none";
+
+        div_Liquidez = document.getElementById("div_Liquidez");
+        div_Liquidez.style.display = "none";
+
+        div_Endeudamiento = document.getElementById("div_Endeudamiento");
+        div_Endeudamiento.style.display = "none";
+
+        div_Rantabilidad = document.getElementById("div_Rantabilidad");
+        div_Rantabilidad.style.display = "none";
+
+        div_Cobertura = document.getElementById("div_Cobertura");
+        div_Cobertura.style.display = "";
+    }
 }
