@@ -11,6 +11,12 @@
 		<link rel="stylesheet" type="text/css" href='./css/style.css'>
 
 		<script type="text/javascript">
+
+			function fecha(){
+				var $periodo1 = document.getElementById("periodo1_1").value;
+				var $periodo2 = document.getElementById("periodo1_2").value;
+			}
+
 			//la función recibe como parámetros el numero de la columna a ocultar 
 			function ocultarColumna(num,ver) { 
 			    //aquí utilizamos el id de la tabla, en este caso es 'tabla'
@@ -35,7 +41,7 @@
 		</script>
     </head>
 
-    <body>
+    <body onload="fecha()">
     	<nav class="navbar navbar-default">
 		    <div class="container-fluid">
 		        <div class="navbar-header">
@@ -101,9 +107,7 @@
 					<?php
 
 						//**************** FILA VENTAS *******************//
-						$periodo1 = ($_GET['periodo1_1']);
-						$periodo2 = ($_GET['periodo1_2']);
-						$ventas = "SELECT SUM(monto) FROM factura WHERE fecha between '$periodo1' and '$periodo2'";
+						$ventas = "SELECT SUM(monto) FROM factura WHERE fecha between '2015-01-01' and '2016-01-01'";
 						$resVentas=$conexion->query($ventas);
 
 						while ($registroVentas = $resVentas->fetch_array(MYSQLI_BOTH)){
