@@ -106,8 +106,11 @@
 				<tbody>
 					<?php
 
+						$periodo1 = echo "document.getElementById('periodo1_1').value;";
+						$periodo2 = echo "document.getElementById('periodo1_2').value;";
+
 						//**************** FILA VENTAS *******************//
-						$ventas = "SELECT SUM(monto) FROM factura WHERE fecha between '2015-01-01' and '2016-01-01'";
+						$ventas = "SELECT SUM(monto) FROM factura WHERE fecha between ".$periodo1." "and" ".$periodo2."";
 						$resVentas=$conexion->query($ventas);
 
 						while ($registroVentas = $resVentas->fetch_array(MYSQLI_BOTH)){
