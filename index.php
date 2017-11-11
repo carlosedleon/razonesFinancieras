@@ -62,35 +62,35 @@
 					<div class="col-sm-4">
 						<h3>Primer periodo</h3>
 						<label>Inicio</label><br>
-						<input type="date" id="periodo1_1" name="periodo1_1"><br><br>
+						<input type="date" id="periodo1_1" name="periodo1_1" value="2015-01-01"><br><br>
 						<label>Fin</label><br>
-						<input type="date" id="periodo1_2" name="periodo1_2"><br><br>
+						<input type="date" id="periodo1_2" name="periodo1_2" value="2015-05-01"><br><br>
 						<span><input type="checkbox" checked="checked" id="chk_1" value="first_checkbox" onchange="ocultarColumna(1)"> Ver primer periodo en resultados</span><br><br>
 					</div>
-					<input type="submit" name="">
+
+					<div class="col-sm-4">
+						<h3>Segundo periodo</h3>
+						<label>Inicio</label><br>
+						<input type="date" name="periodo2_1" id="periodo2_1" value="2016-01-01"><br><br>
+						<label>Fin</label><br>
+						<input type="date" name="periodo2_2" id="periodo2_2" value="2017-01-01"><br><br>
+						<span><input type="checkbox" checked="checked" id="chk_2" value="second_checkbox" onchange="ocultarColumna(2)"> Ver segundo periodo en resultados</span><br><br>
+					</div>
+
+					<div class="col-sm-4">
+						<h3>Funciones</h3>
+						<!--*** SELECCIONAMOS LA SECCION A EDITAR ***-->
+			      		<select id="cmb_seccion" name="cmb_seccion" class="form-control" onchange="mostrar(this);">
+			      			<option id="vacio" name="vacio" value="vacio">Seleccione una opción</option>
+						 	<option id="estados_financieros" name="estados_financieros" value="estados_financieros">Estados Financieros</option>
+						 	<option id="razon_liquidez" name="razon_liquidez" value="razon_liquidez">Razón de Liquidez</option>
+							<option id="razon_endeudamiento" name="razon_endeudamiento" value="razon_endeudamiento">Razón de Endeudamiento</option>
+							<option id="razon_rentabilidad" name="razon_rentabilidad" value="razon_rentabilidad">Razón de Rentabilidad</option>
+							<option id="razon_cobertura" name="razon_cobertura" value="razon_cobertura">Razón de Cobertura</option>
+						</select>
+					</div>
+					<input type="submit" name="" class="btn-default">
 				</form>
-
-				<div class="col-sm-4">
-					<h3>Segundo periodo</h3>
-					<label>Inicio</label><br>
-					<input type="date" name=""><br><br>
-					<label>Fin</label><br>
-					<input type="date" name=""><br><br>
-					<span><input type="checkbox" checked="checked" id="chk_2" value="second_checkbox" onchange="ocultarColumna(2)"> Ver segundo periodo en resultados</span><br><br>
-				</div>
-
-				<div class="col-sm-4">
-					<h3>Funciones</h3>
-					<!--*** SELECCIONAMOS LA SECCION A EDITAR ***-->
-		      		<select id="cmb_seccion" name="cmb_seccion" class="form-control" onchange="mostrar(this);">
-		      			<option id="vacio" name="vacio" value="vacio">Seleccione una opción</option>
-					 	<option id="estados_financieros" name="estados_financieros" value="estados_financieros">Estados Financieros</option>
-					 	<option id="razon_liquidez" name="razon_liquidez" value="razon_liquidez">Razón de Liquidez</option>
-						<option id="razon_endeudamiento" name="razon_endeudamiento" value="razon_endeudamiento">Razón de Endeudamiento</option>
-						<option id="razon_rentabilidad" name="razon_rentabilidad" value="razon_rentabilidad">Razón de Rentabilidad</option>
-						<option id="razon_cobertura" name="razon_cobertura" value="razon_cobertura">Razón de Cobertura</option>
-					</select>
-				</div>
 			</div>
 		</div><hr>
 
@@ -112,48 +112,65 @@
 				<tbody>
 					<?php
 
-						$periodo1=$_GET['periodo1_1'];
-						$periodo2=$_GET['periodo1_2'];
+						$periodo11=$_GET['periodo1_1'];
+						$periodo12=$_GET['periodo1_2'];
+						$periodo21=$_GET['periodo2_1'];
+						$periodo22=$_GET['periodo2_2'];
 
 						//**************** FILA VENTAS *******************//
-						$ventas = "SELECT SUM(monto) FROM factura WHERE fecha between '$periodo1' and '$periodo2'";
+						$ventas = "SELECT SUM(monto) FROM factura WHERE fecha between '$periodo11' and '$periodo12'";
 						$resVentas=$conexion->query($ventas);
 
+						$ventas1 = "SELECT SUM(monto) FROM factura WHERE fecha between '$periodo21' and '$periodo22'";
+						$resVentas1=$conexion->query($ventas1);
+
 						while ($registroVentas = $resVentas->fetch_array(MYSQLI_BOTH)){
-							echo'
+							while ($registroVentas1 = $resVentas1->fetch_array(MYSQLI_BOTH)) {
+								echo'
 								<tr>
 									<td>Ventas</td>
 									<td>'.$registroVentas[0].'</td>
-									<td>'.$registroVentas[0].'</td>
+									<td>'.$registroVentas1[0].'</td>
 								</tr>';
+							}
 						}
 
 
 						//**************** FILA COSTOS *******************//
-						$costo = "SELECT SUM(costo) FROM factura WHERE fecha between '$periodo1' and '$periodo2'";
+						$costo = "SELECT SUM(costo) FROM factura WHERE fecha between '$periodo11' and '$periodo12'";
 						$resCosto=$conexion->query($costo);
 
+						$costo1 = "SELECT SUM(costo) FROM factura WHERE fecha between '$periodo21' and '$periodo22'";
+						$resCosto1=$conexion->query($costo1);
+
 						while ($registroCosto = $resCosto->fetch_array(MYSQLI_BOTH)){
-							echo'
+							while ($registroCosto1 = $resCosto1->fetch_array(MYSQLI_BOTH)) {
+								echo'
 								<tr>
 									<td>Costo de ventas</td>
 									<td>'.$registroCosto[0].'</td>
-									<td>'.$registroCosto[0].'</td>
+									<td>'.$registroCosto1[0].'</td>
 								</tr>';
+							}
 						}
 
 
 						//**************** FILA UTILIDAD BRUTA *******************//
-						$utilidad_bruta = "SELECT SUM(monto)-SUM(costo) FROM factura WHERE fecha between '$periodo1' and '$periodo2'";
+						$utilidad_bruta = "SELECT SUM(monto)-SUM(costo) FROM factura WHERE fecha between '$periodo11' and '$periodo12'";
 						$resUtilidadBruta=$conexion->query($utilidad_bruta);
 
+						$utilidad_bruta1 = "SELECT SUM(monto)-SUM(costo) FROM factura WHERE fecha between '$periodo21' and '$periodo22'";
+						$resUtilidadBruta1=$conexion->query($utilidad_bruta1);
+
 						while ($registroUtilidadBruta = $resUtilidadBruta->fetch_array(MYSQLI_BOTH)){
-							echo'
+							while ($registroUtilidadBruta1 = $resUtilidadBruta1->fetch_array(MYSQLI_BOTH)) {
+								echo'
 								<tr>
 									<td>Utilidad bruta</td>
 									<td>'.$registroUtilidadBruta[0].'</td>
-									<td>'.$registroUtilidadBruta[0].'</td>
+									<td>'.$registroUtilidadBruta1[0].'</td>
 								</tr>';
+							}
 						}
 
 
@@ -168,16 +185,21 @@
 
 
 						//**************** FILA UT. ANTES INT *******************//
-						$utantesint = "SELECT (SUM(monto)-SUM(costo)-0)/SUM(monto) FROM factura WHERE fecha between '$periodo1' and '$periodo2'";
+						$utantesint = "SELECT (SUM(monto)-SUM(costo)-0)/SUM(monto) FROM factura WHERE fecha between '$periodo11' and '$periodo12'";
 						$resUtAntesInt=$conexion->query($utantesint);
 
+						$utantesint1 = "SELECT (SUM(monto)-SUM(costo)-0)/SUM(monto) FROM factura WHERE fecha between '$periodo21' and '$periodo22'";
+						$resUtAntesInt1=$conexion->query($utantesint1);
+
 						while ($registroUtAntesInt = $resUtAntesInt->fetch_array(MYSQLI_BOTH)){
-							echo'
+							while ($registroUtAntesInt1 = $resUtAntesInt1->fetch_array(MYSQLI_BOTH)) {
+								echo'
 								<tr>
 									<td>Ut. antes int. e imp.</td>
 									<td>'.$registroUtAntesInt[0].'</td>
-									<td>'.$registroUtAntesInt[0].'</td>
+									<td>'.$registroUtAntesInt1[0].'</td>
 								</tr>';
+							}
 						}
 
 
@@ -192,16 +214,21 @@
 
 
 						//**************** FILA UTILIDAD NETA *******************//
-						$utilidadNeta = "SELECT (SUM(monto)-SUM(costo)-0-SUM(impuestos)-8500000)/SUM(monto) FROM factura WHERE fecha between '$periodo1' and '$periodo2'";
+						$utilidadNeta = "SELECT (SUM(monto)-SUM(costo)-0-SUM(impuestos)-8500000)/SUM(monto) FROM factura WHERE fecha between '$periodo11' and '$periodo12'";
 						$resUtilidadNeta=$conexion->query($utilidadNeta);
 
+						$utilidadNeta1 = "SELECT (SUM(monto)-SUM(costo)-0-SUM(impuestos)-8500000)/SUM(monto) FROM factura WHERE fecha between '$periodo21' and '$periodo22'";
+						$resUtilidadNeta1=$conexion->query($utilidadNeta1);
+
 						while ($registroUtilidadNeta = $resUtilidadNeta->fetch_array(MYSQLI_BOTH)){
-							echo'
+							while ($registroUtilidadNeta1 = $resUtilidadNeta1->fetch_array(MYSQLI_BOTH)) {
+								echo'
 								<tr>
 									<td>Utilidad neta</td>
 									<td>'.$registroUtilidadNeta[0].'</td>
-									<td>'.$registroUtilidadNeta[0].'</td>
+									<td>'.$registroUtilidadNeta1[0].'</td>
 								</tr>';
+							}
 						}
 					?>
 				</tbody>
