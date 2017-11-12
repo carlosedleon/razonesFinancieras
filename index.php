@@ -245,26 +245,74 @@
 				</thead>
 
 				<tbody>
-					<tr>
-						<td>Efectivo</td>
-						<td>2,000</td>
-						<td>2,100</td>
-					</tr>
-					<tr>
-						<td>Cuentas por cobrar</td>
-						<td>1,500</td>
-						<td>1,200</td>
-					</tr>
-					<tr>
-						<td>Inventarios</td>
-						<td>1,000</td>
-						<td>1,100</td>
-					</tr>
-					<tr>
-						<td>Total activo circulante</td>
-						<td>4,500</td>
-						<td>4,400</td>
-					</tr>
+					<?php
+						$periodo11=$_GET['periodo1_1'];
+						$periodo12=$_GET['periodo1_2'];
+						$periodo21=$_GET['periodo2_1'];
+						$periodo22=$_GET['periodo2_2'];
+						$efectivo1 = '9500000';
+						$efectivo2 = '10000000';
+						//**************** FILA EFECTIVO *******************//
+
+						echo'
+							<tr>
+								<td>Efectivo</td>
+								<td>'.$efectivo1.'</td>
+								<td>'.$efectivo2.'</td>
+							</tr>';
+
+
+						//**************** FILA CUENTAS POR COBRAR *******************//
+						$cuentasporcobrar = "SELECT SUM(monto)/(('$efectivo1'+('$efectivo1'-SUM(monto)))/2) FROM cxc WHERE fecha between '$periodo11' and '$periodo12'";
+						$resCuentasporCobrar=$conexion->query($cuentasporcobrar);
+
+						$cuentasporcobrar1 = "SELECT SUM(monto)/(('$efectivo2'+('$efectivo2'-SUM(monto)))/2) FROM cxc WHERE fecha between '$periodo21' and '$periodo22'";
+						$resCuentasporCobrar1=$conexion->query($cuentasporcobrar1);
+
+						while ($registroCuentasporCobrar = $resCuentasporCobrar->fetch_array(MYSQLI_BOTH)){
+							while ($registroCuentasporCobrar1 = $resCuentasporCobrar1->fetch_array(MYSQLI_BOTH)) {
+								echo'
+								<tr>
+									<td>Cuentas por cobrar</td>
+									<td>'.$registroCuentasporCobrar[0].'</td>
+									<td>'.$registroCuentasporCobrar1[0].'</td>
+								</tr>';
+							}
+						}
+
+						//**************** FILA INVENTARIOS *******************//
+						$cuentasporcobrar = "SELECT SUM(cantidad) FROM articulo";
+						$resCuentasporCobrar=$conexion->query($cuentasporcobrar);
+
+						while ($registroCuentasporCobrar = $resCuentasporCobrar->fetch_array(MYSQLI_BOTH)) {
+							echo'
+							<tr>
+								<td>Inventarios</td>
+								<td>'.$registroCuentasporCobrar[0].'</td>
+								<td>'.$registroCuentasporCobrar[0].'</td>
+							</tr>';
+						}
+
+
+						//*******  VOY POR AQUI  *******//
+						//**************** FILA ACTIVO CIRCULANTE *******************//
+						$activocirculante = "SELECT ('$efectivo1'+SUM(cantidad)+('$efectivo1'-SUM(monto))) FROM cxc WHERE fecha between '$periodo11' and '$periodo12'";
+						$resActivoCirculante=$conexion->query($activocirculante);
+
+						$activocirculante1 = "SELECT  FROM cxc WHERE fecha between '$periodo21' and '$periodo22'";
+						$resActivoCirculante1=$conexion->query($activocirculante1);
+
+						while ($registroActivoCirculante = $resActivoCirculante->fetch_array(MYSQLI_BOTH)){
+							while ($registroActivoCirculante1 = $resActivoCirculante1->fetch_array(MYSQLI_BOTH)) {
+								echo'
+								<tr>
+									<td>Total activo circulante</td>
+									<td>'.$registroActivoCirculante[0].'</td>
+									<td>'.$registroActivoCirculante1[0].'</td>
+								</tr>';
+							}
+						}
+					?>
 					<tr>
 						<td>Activo fijo neto</td>
 						<td>8,000</td>
