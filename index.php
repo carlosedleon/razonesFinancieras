@@ -1,5 +1,244 @@
 <?php
     include 'library/configServer.php';
+
+
+    //*************************  TABLA ESTADO DE RESULTADOS *******************************//
+
+    $periodo11=$_GET['periodo1_1'];
+	$periodo12=$_GET['periodo1_2'];
+	$periodo21=$_GET['periodo2_1'];
+	$periodo22=$_GET['periodo2_2'];
+	$efectivo1='9500000';
+	$efectivo2='10000000';
+	$activofijo='11000000';
+	$pasivoalargoplazo='5000000';
+	$gastosoperacion='8500000';
+	$gastosoperacion2='9000000';
+	$gastosfinancieros='0';
+
+	$consultaVentas = "SELECT SUM(total) FROM factura WHERE fecha between '$periodo11' and '$periodo12'";
+	$resVentas=$conexion->query($consultaVentas);
+	$ventas = $resVentas->fetch_array(MYSQLI_BOTH);
+
+	$consultaVentas2 = "SELECT SUM(total) FROM factura WHERE fecha between '$periodo21' and '$periodo22'";
+	$resVentas2=$conexion->query($consultaVentas2);
+	$ventas2 = $resVentas2->fetch_array(MYSQLI_BOTH);
+
+	$consultaVentasF = "SELECT SUM(total) FROM factura WHERE fecha between '$periodo12' and '$periodo11'";
+	$resVentasF=$conexion->query($consultaVentasF);
+	$ventasF = $resVentasF->fetch_array(MYSQLI_BOTH);
+
+	$consultaVentasF2 = "SELECT SUM(total) FROM factura WHERE fecha between '$periodo22' and '$periodo21'";
+	$resVentasF2=$conexion->query($consultaVentasF2);
+	$ventas2F = $resVentasF2->fetch_array(MYSQLI_BOTH);
+
+	$consultaCosto = "SELECT SUM(costo) FROM factura WHERE fecha between '$periodo11' and '$periodo12'";
+	$resCosto=$conexion->query($consultaCosto);
+	$costo = $resCosto->fetch_array(MYSQLI_BOTH);
+
+	$consultaCosto2 = "SELECT SUM(costo) FROM factura WHERE fecha between '$periodo21' and '$periodo22'";
+	$resCosto2=$conexion->query($consultaCosto2);
+	$costo2 = $resCosto2->fetch_array(MYSQLI_BOTH);
+
+	$consultaCostoF = "SELECT SUM(costo) FROM factura WHERE fecha between '$periodo12' and '$periodo11'";
+	$resCostoF=$conexion->query($consultaCostoF);
+	$costoF = $resCostoF->fetch_array(MYSQLI_BOTH);
+
+	$consultaCostoF2 = "SELECT SUM(costo) FROM factura WHERE fecha between '$periodo22' and '$periodo21'";
+	$resCostoF2=$conexion->query($consultaCostoF2);
+	$costo2F = $resCostoF2->fetch_array(MYSQLI_BOTH);
+
+	$consultaImpuestos = "SELECT SUM(impuestos) FROM factura WHERE fecha between '$periodo11' and '$periodo12'";
+	$resImpuestos=$conexion->query($consultaImpuestos);
+	$impuestos = $resImpuestos->fetch_array(MYSQLI_BOTH);
+
+	$consultaImpuestos2 = "SELECT SUM(impuestos) FROM factura WHERE fecha between '$periodo21' and '$periodo22'";
+	$resImpuestos2=$conexion->query($consultaImpuestos2);
+	$impuestos2 = $resImpuestos2->fetch_array(MYSQLI_BOTH);
+
+	$utilidadbruta = (($ventas[0]-$costo[0])/$ventas[0]);
+
+	$utilidadbruta2 = (($ventas2[0]-$costo2[0])/$ventas2[0]);
+
+	$utantesint = (($ventas[0]-$costo[0]-$gastosfinancieros)/$ventas[0]);
+
+	$utantesint2 = (($ventas2[0]-$costo2[0]-$gastosfinancieros)/$ventas2[0]);
+
+	$margennetoutilidades = (($ventas[0]-$costo[0]-$gastosfinancieros-$impuestos[0]-$gastosoperacion)/$ventas[0]);
+
+	$margennetoutilidades2 = (($ventas2[0]-$costo2[0]-$gastosfinancieros-$impuestos2[0]-$gastosoperacion)/$ventas2[0]);
+
+	//*************************  TABLA BALANCE GENERAL *******************************//
+
+	$consultaSaldoCxc = "SELECT (SUM(monto)-SUM(pago)) FROM cxc";
+	$resSaldocxc=$conexion->query($consultaSaldoCxc);
+	$saldo_cxc = $resSaldocxc->fetch_array(MYSQLI_BOTH);
+
+
+	$consultaSaldoCxp = "SELECT (SUM(monto)-SUM(pago)) FROM cxp";
+	$resSaldocxp=$conexion->query($consultaSaldoCxp);
+	$saldo_cxp = $resSaldocxp->fetch_array(MYSQLI_BOTH);
+
+
+	$consultaCxc_delperiodoI = ("SELECT SUM(monto) FROM cxc WHERE fecha between '$periodo11' and '$periodo12'");
+	$rescxc_delperiodoI=$conexion->query($consultaCxc_delperiodoI);
+	$cxc_delperiodoI = $rescxc_delperiodoI->fetch_array(MYSQLI_BOTH);
+
+
+	$consultaCxp_delperiodoI = ("SELECT SUM(monto) FROM cxp WHERE fecha between '$periodo11' and '$periodo12'");
+	$rescxp_delperiodoI=$conexion->query($consultaCxp_delperiodoI);
+	$cxp_delperiodoI = $rescxp_delperiodoI->fetch_array(MYSQLI_BOTH);
+
+
+	$consultaCxc_delperiodoI2 = "SELECT SUM(monto) FROM cxc WHERE fecha between '$periodo21' and '$periodo22'";
+	$rescxc_delperiodoI2=$conexion->query($consultaCxc_delperiodoI2);
+	$cxc_delperiodoI2 = $rescxc_delperiodoI2->fetch_array(MYSQLI_BOTH);
+
+
+	$consultaCxp_delperiodoI2 = "SELECT SUM(monto) FROM cxp WHERE fecha between '$periodo21' and '$periodo22'";
+	$rescxp_delperiodoI2=$conexion->query($consultaCxp_delperiodoI2);
+	$cxp_delperiodoI2 = $rescxp_delperiodoI2->fetch_array(MYSQLI_BOTH);
+
+
+	$consultaCxc_delperiodoF = "SELECT SUM(monto) FROM cxc WHERE fecha between '$periodo12' and '$periodo11'";
+	$rescxc_delperiodoF=$conexion->query($consultaCxc_delperiodoF);
+	$cxc_delperiodoF = $rescxc_delperiodoF->fetch_array(MYSQLI_BOTH);
+
+
+	$consultaCxp_delperiodoF = "SELECT SUM(monto) FROM cxp WHERE fecha between '$periodo12' and '$periodo11'";
+	$rescxp_delperiodoF=$conexion->query($consultaCxp_delperiodoF);
+	$cxp_delperiodoF = $rescxp_delperiodoF->fetch_array(MYSQLI_BOTH);
+
+
+	$consultaCxc_delperiodoF2 = "SELECT SUM(monto) FROM cxc WHERE fecha between '$periodo21' and '$periodo22'";
+	$rescxc_delperiodoF2=$conexion->query($consultaCxc_delperiodoF2);
+	$cxc_delperiodoF2 = $rescxc_delperiodoF2->fetch_array(MYSQLI_BOTH);
+
+
+	$consultaCxp_delperiodoF2 = "SELECT SUM(monto) FROM cxc WHERE fecha between '$periodo21' and '$periodo22'";
+	$rescxp_delperiodoF2=$conexion->query($consultaCxp_delperiodoF2);
+	$cxp_delperiodoF2 = $rescxp_delperiodoF2->fetch_array(MYSQLI_BOTH);
+
+
+	$consultaAbonos_cxc_delperiodo = "SELECT SUM(total) FROM rec_cxc WHERE fecha between '$periodo11' and '$periodo12'";
+	$resabonos_cxc_delperiodo=$conexion->query($consultaAbonos_cxc_delperiodo);
+	$abonos_cxc_delperiodo = $resabonos_cxc_delperiodo->fetch_array(MYSQLI_BOTH);
+
+	$consultaAbonos_cxp_delperiodo = "SELECT SUM(total) FROM rec_cxp WHERE fecha between '$periodo11' and '$periodo12'";
+	$resabonos_cxp_delperiodo=$conexion->query($consultaAbonos_cxp_delperiodo);
+	$abonos_cxp_delperiodo = $resabonos_cxp_delperiodo->fetch_array(MYSQLI_BOTH);
+
+
+	$consultaAbonos_cxc_delperiodo2 = "SELECT SUM(total) FROM rec_cxc WHERE fecha between '$periodo21' and '$periodo22'";
+	$resabonos_cxc_delperiodo2=$conexion->query($consultaAbonos_cxc_delperiodo2);
+	$abonos_cxc_delperiodo2 = $resabonos_cxc_delperiodo2->fetch_array(MYSQLI_BOTH);
+
+
+	$consultaAbonos_cxp_delperiodo2 = "SELECT SUM(total) FROM rec_cxp WHERE fecha between '$periodo21' and '$periodo22'";
+	$resabonos_cxp_delperiodo2=$conexion->query($consultaAbonos_cxp_delperiodo2);
+	$abonos_cxp_delperiodo2 = $resabonos_cxp_delperiodo2->fetch_array(MYSQLI_BOTH);
+
+
+	$consultaInventario = "SELECT SUM(costo * cantidad) FROM articulo";
+	$resinventario=$conexion->query($consultaInventario);
+	$inventario = $resinventario->fetch_array(MYSQLI_BOTH);
+
+	$saldo_cxc_inicial = ($saldo_cxc[0]-$cxc_delperiodoI[0]+$abonos_cxc_delperiodo[0]);
+
+
+	$saldo_cxp_inicial = ($saldo_cxp[0]-$cxp_delperiodoI[0]+$abonos_cxp_delperiodo[0]);
+
+
+	$saldo_cxc_inicial2 = ($saldo_cxc[0]-$cxc_delperiodoI2[0]+$abonos_cxc_delperiodo2[0]);
+
+
+	$saldo_cxp_inicial2 = ($saldo_cxp[0]-$cxp_delperiodoI2[0]+$abonos_cxp_delperiodo2[0]);
+
+
+	$saldo_cxc_final = ($saldo_cxc[0]-$cxc_delperiodoF[0]+$abonos_cxc_delperiodo[0]);
+
+
+	$saldo_cxp_final = ($saldo_cxp[0]-$cxp_delperiodoF[0]+$abonos_cxp_delperiodo[0]);
+
+
+	$saldo_cxc_final2 = ($saldo_cxc[0]-$cxc_delperiodoF2[0]+$abonos_cxc_delperiodo2[0]);
+
+
+	$saldo_cxp_final2 = ($saldo_cxp[0]-$cxp_delperiodoF2[0]+$abonos_cxp_delperiodo2[0]);
+
+
+	$activocirculante = ($efectivo1 + $inventario[0] + $saldo_cxc_final);
+
+
+	$activocirculante2 = ($efectivo1 + $inventario[0] + $saldo_cxc_final2);
+
+
+	$activototal = ($activocirculante + $activofijo);
+
+
+	$activototal2 = ($activocirculante2 + $activofijo);
+
+
+	$pasivocirculante = $saldo_cxp_final;
+
+
+	$pasivocirculante2 = $saldo_cxp_final2;
+
+
+	$totalpasivo = $pasivocirculante + $pasivoalargoplazo;
+
+
+	$totalpasivo2 = $pasivocirculante2 + $pasivoalargoplazo;
+
+
+	//*************************  TABLA RAZON DE LIQUIDEZ *******************************//
+
+	$capitalneto = ($activocirculante-$pasivocirculante);
+
+
+	$capitalneto2 = ($activocirculante2-$pasivocirculante2);
+
+
+	$indicesolvencia = ($activocirculante/$pasivocirculante);
+
+
+	$indicesolvencia2 = ($activocirculante2/$pasivocirculante2);
+
+
+	$pruebaacida = (($activocirculante-$inventario[0])/$pasivocirculante);
+
+
+	$pruebaacida2 = (($activocirculante2-$inventario[0])/$pasivocirculante2);
+
+
+	$inventarioinicial = ($inventario[0]-$ventas[0]+$costo[0]);
+
+
+	$inventarioinicial2 = ($inventario[0]-$ventas2[0]+$costo2[0]);
+
+
+	$inventariofinal = ($inventario[0]-$ventasF[0]+$costoF[0]);
+
+
+	$inventariofinal2 = ($inventario[0]-$ventas2F[0]+$costo2F[0]);
+
+
+	$rotacioninventario = ($costo[0]/(($inventarioinicial+$inventariofinal)/2));
+
+
+	$rotacioninventario2 = ($costo2[0]/(($inventarioinicial2+$inventariofinal2)/2));
+
+
+	$rotacioncartera = ($cxc_delperiodoI[0]/(($saldo_cxc_inicial+$saldo_cxc_final)/2));
+
+
+	$rotacioncartera2 = ($cxc_delperiodoI2[0]/(($saldo_cxc_inicial2+$saldo_cxc_final2)/2));
+
+
+	$rotacioncuentasporpagar = ($cxp_delperiodoI[0]/(($saldo_cxp_inicial+$saldo_cxp_final)/2));
+
+
+	$rotacioncuentasporpagar2 = ($cxp_delperiodoI2[0]/(($saldo_cxp_inicial2+$saldo_cxp_final2)/2));
 ?>
 
 <!DOCTYPE html>
@@ -112,124 +351,71 @@
 				<tbody>
 					<?php
 
-						$periodo11=$_GET['periodo1_1'];
-						$periodo12=$_GET['periodo1_2'];
-						$periodo21=$_GET['periodo2_1'];
-						$periodo22=$_GET['periodo2_2'];
-
 						//**************** FILA VENTAS *******************//
-						$ventas = "SELECT SUM(monto) FROM factura WHERE fecha between '$periodo11' and '$periodo12'";
-						$resVentas=$conexion->query($ventas);
 
-						$ventas1 = "SELECT SUM(monto) FROM factura WHERE fecha between '$periodo21' and '$periodo22'";
-						$resVentas1=$conexion->query($ventas1);
-
-						while ($registroVentas = $resVentas->fetch_array(MYSQLI_BOTH)){
-							while ($registroVentas1 = $resVentas1->fetch_array(MYSQLI_BOTH)) {
-								echo'
-								<tr>
-									<td>Ventas</td>
-									<td>'.$registroVentas[0].'</td>
-									<td>'.$registroVentas1[0].'</td>
-								</tr>';
-							}
-						}
+						echo'
+						<tr>
+							<td>Ventas</td>
+							<td>'.$ventas[0].'</td>
+							<td>'.$ventas2[0].'</td>
+						</tr>';
 
 
 						//**************** FILA COSTOS *******************//
-						$costo = "SELECT SUM(costo) FROM factura WHERE fecha between '$periodo11' and '$periodo12'";
-						$resCosto=$conexion->query($costo);
 
-						$costo1 = "SELECT SUM(costo) FROM factura WHERE fecha between '$periodo21' and '$periodo22'";
-						$resCosto1=$conexion->query($costo1);
-
-						while ($registroCosto = $resCosto->fetch_array(MYSQLI_BOTH)){
-							while ($registroCosto1 = $resCosto1->fetch_array(MYSQLI_BOTH)) {
-								echo'
-								<tr>
-									<td>Costo de ventas</td>
-									<td>'.$registroCosto[0].'</td>
-									<td>'.$registroCosto1[0].'</td>
-								</tr>';
-							}
-						}
-
+						echo'
+						<tr>
+							<td>Costo de ventas</td>
+							<td>'.$costo[0].'</td>
+							<td>'.$costo2[0].'</td>
+						</tr>';
 
 						//**************** FILA UTILIDAD BRUTA *******************//
-						$utilidad_bruta = "SELECT SUM(monto)-SUM(costo) FROM factura WHERE fecha between '$periodo11' and '$periodo12'";
-						$resUtilidadBruta=$conexion->query($utilidad_bruta);
 
-						$utilidad_bruta1 = "SELECT SUM(monto)-SUM(costo) FROM factura WHERE fecha between '$periodo21' and '$periodo22'";
-						$resUtilidadBruta1=$conexion->query($utilidad_bruta1);
-
-						while ($registroUtilidadBruta = $resUtilidadBruta->fetch_array(MYSQLI_BOTH)){
-							while ($registroUtilidadBruta1 = $resUtilidadBruta1->fetch_array(MYSQLI_BOTH)) {
-								echo'
-								<tr>
-									<td>Utilidad bruta</td>
-									<td>'.$registroUtilidadBruta[0].'</td>
-									<td>'.$registroUtilidadBruta1[0].'</td>
-								</tr>';
-							}
-						}
-
+						echo'
+						<tr>
+							<td>Utilidad bruta</td>
+							<td>'.$utilidadbruta.'</td>
+							<td>'.$utilidadbruta2.'</td>
+						</tr>';
 
 						//**************** FILA GASTOS OPERACION *******************//
 
 						echo'
 							<tr>
 								<td>Gastos de operación</td>
-								<td>8500000</td>
-								<td>8500000</td>
+								<td>'.$gastosoperacion.'</td>
+								<td>'.$gastosoperacion2.'</td>
 							</tr>';
 
 
 						//**************** FILA UT. ANTES INT *******************//
-						$utantesint = "SELECT (SUM(monto)-SUM(costo)-0)/SUM(monto) FROM factura WHERE fecha between '$periodo11' and '$periodo12'";
-						$resUtAntesInt=$conexion->query($utantesint);
 
-						$utantesint1 = "SELECT (SUM(monto)-SUM(costo)-0)/SUM(monto) FROM factura WHERE fecha between '$periodo21' and '$periodo22'";
-						$resUtAntesInt1=$conexion->query($utantesint1);
-
-						while ($registroUtAntesInt = $resUtAntesInt->fetch_array(MYSQLI_BOTH)){
-							while ($registroUtAntesInt1 = $resUtAntesInt1->fetch_array(MYSQLI_BOTH)) {
-								echo'
-								<tr>
-									<td>Ut. antes int. e imp.</td>
-									<td>'.$registroUtAntesInt[0].'</td>
-									<td>'.$registroUtAntesInt1[0].'</td>
-								</tr>';
-							}
-						}
-
+						echo'
+						<tr>
+							<td>Ut. antes int. e imp.</td>
+							<td>'.$utantesint.'</td>
+							<td>'.$utantesint2.'</td>
+						</tr>';
 
 						//**************** FILA GASTOS FINANCIEROS *******************//
 
 						echo'
 							<tr>
 								<td>Gastos financieros</td>
-								<td>0</td>
-								<td>0</td>
+								<td>'.$gastosfinancieros.'</td>
+								<td>'.$gastosfinancieros.'</td>
 							</tr>';
 
 
 						//**************** FILA UTILIDAD NETA *******************//
-						$utilidadNeta = "SELECT (SUM(monto)-SUM(costo)-0-SUM(impuestos)-8500000)/SUM(monto) FROM factura WHERE fecha between '$periodo11' and '$periodo12'";
-						$resUtilidadNeta=$conexion->query($utilidadNeta);
 
-						$utilidadNeta1 = "SELECT (SUM(monto)-SUM(costo)-0-SUM(impuestos)-8500000)/SUM(monto) FROM factura WHERE fecha between '$periodo21' and '$periodo22'";
-						$resUtilidadNeta1=$conexion->query($utilidadNeta1);
-
-						while ($registroUtilidadNeta = $resUtilidadNeta->fetch_array(MYSQLI_BOTH)){
-							while ($registroUtilidadNeta1 = $resUtilidadNeta1->fetch_array(MYSQLI_BOTH)) {
-								echo'
-								<tr>
-									<td>Utilidad neta</td>
-									<td>'.$registroUtilidadNeta[0].'</td>
-									<td>'.$registroUtilidadNeta1[0].'</td>
-								</tr>';
-							}
-						}
+						echo'
+						<tr>
+							<td>Utilidad neta</td>
+							<td>'.$margennetoutilidades.'</td>
+							<td>'.$margennetoutilidades2.'</td>
+						</tr>';
 					?>
 				</tbody>
 			</table><br><br>
@@ -246,12 +432,7 @@
 
 				<tbody>
 					<?php
-						$periodo11=$_GET['periodo1_1'];
-						$periodo12=$_GET['periodo1_2'];
-						$periodo21=$_GET['periodo2_1'];
-						$periodo22=$_GET['periodo2_2'];
-						$efectivo1 = '9500000';
-						$efectivo2 = '10000000';
+						
 						//**************** FILA EFECTIVO *******************//
 
 						echo'
@@ -263,96 +444,90 @@
 
 
 						//**************** FILA CUENTAS POR COBRAR *******************//
-						$cuentasporcobrar = "SELECT SUM(monto)/(('$efectivo1'+('$efectivo1'-SUM(monto)))/2) FROM cxc WHERE fecha between '$periodo11' and '$periodo12'";
-						$resCuentasporCobrar=$conexion->query($cuentasporcobrar);
 
-						$cuentasporcobrar1 = "SELECT SUM(monto)/(('$efectivo2'+('$efectivo2'-SUM(monto)))/2) FROM cxc WHERE fecha between '$periodo21' and '$periodo22'";
-						$resCuentasporCobrar1=$conexion->query($cuentasporcobrar1);
+						echo'
+						<tr>
+							<td>Cuentas por cobrar</td>
+							<td>'.$cxc_delperiodoI[0].'</td>
+							<td>'.$cxc_delperiodoI2[0].'</td>
+						</tr>';
 
-						while ($registroCuentasporCobrar = $resCuentasporCobrar->fetch_array(MYSQLI_BOTH)){
-							while ($registroCuentasporCobrar1 = $resCuentasporCobrar1->fetch_array(MYSQLI_BOTH)) {
-								echo'
-								<tr>
-									<td>Cuentas por cobrar</td>
-									<td>'.$registroCuentasporCobrar[0].'</td>
-									<td>'.$registroCuentasporCobrar1[0].'</td>
-								</tr>';
-							}
-						}
 
 						//**************** FILA INVENTARIOS *******************//
-						$cuentasporcobrar = "SELECT SUM(cantidad) FROM articulo";
-						$resCuentasporCobrar=$conexion->query($cuentasporcobrar);
 
-						while ($registroCuentasporCobrar = $resCuentasporCobrar->fetch_array(MYSQLI_BOTH)) {
-							echo'
-							<tr>
-								<td>Inventarios</td>
-								<td>'.$registroCuentasporCobrar[0].'</td>
-								<td>'.$registroCuentasporCobrar[0].'</td>
-							</tr>';
-						}
+						echo'
+						<tr>
+							<td>Inventarios</td>
+							<td>'.$inventario[0].'</td>
+							<td>'.$inventario[0].'</td>
+						</tr>';
 
 
-						//*******  VOY POR AQUI  *******//
 						//**************** FILA ACTIVO CIRCULANTE *******************//
-						$activocirculante = "SELECT ('$efectivo1'+SUM(cantidad)+('$efectivo1'-SUM(monto))) FROM cxc WHERE fecha between '$periodo11' and '$periodo12'";
-						$resActivoCirculante=$conexion->query($activocirculante);
+						echo'
+						<tr>
+							<td>Total activo circulante</td>
+							<td>'.$activocirculante.'</td>
+							<td>'.$activocirculante2.'</td>
+						</tr>';
 
-						$activocirculante1 = "SELECT  FROM cxc WHERE fecha between '$periodo21' and '$periodo22'";
-						$resActivoCirculante1=$conexion->query($activocirculante1);
 
-						while ($registroActivoCirculante = $resActivoCirculante->fetch_array(MYSQLI_BOTH)){
-							while ($registroActivoCirculante1 = $resActivoCirculante1->fetch_array(MYSQLI_BOTH)) {
-								echo'
-								<tr>
-									<td>Total activo circulante</td>
-									<td>'.$registroActivoCirculante[0].'</td>
-									<td>'.$registroActivoCirculante1[0].'</td>
-								</tr>';
-							}
-						}
+						//**************** FILA ACTIVO FIJO *******************//
+						echo'
+						<tr>
+							<td>Total fijo neto</td>
+							<td>'.$activofijo.'</td>
+							<td>'.$activofijo.'</td>
+						</tr>';
+
+
+						//**************** FILA TOTAL *******************//
+						echo'
+						<tr>
+							<td>Total activo</td>
+							<td>'.$activototal.'</td>
+							<td>'.$activototal2.'</td>
+						</tr>';
+
+
+						//**************** FILA PASIVO CIRCULANTE *******************//
+						echo'
+						<tr>
+							<td>Pasivo circultante</td>
+							<td>'.$pasivocirculante.'</td>
+							<td>'.$pasivocirculante2.'</td>
+						</tr>';
+
+
+						//**************** FILA CUENTAS POR PAGAR *******************//
+
+						echo'
+						<tr>
+							<td>Cuentas por pagar</td>
+							<td>'.$cxp_delperiodoI[0].'</td>
+							<td>'.$cxp_delperiodoI2[0].'</td>
+						</tr>';
+
+
+						//**************** FILA PASIVO A LARGO PLAZO *******************//
+
+						echo'
+						<tr>
+							<td>Pasivo a largo plazo</td>
+							<td>'.$pasivoalargoplazo.'</td>
+							<td>'.$pasivoalargoplazo.'</td>
+						</tr>';
+
+
+						//**************** FILA TOTAL PASIVO *******************//
+
+						echo'
+						<tr>
+							<td>Total pasivo</td>
+							<td>'.$totalpasivo.'</td>
+							<td>'.$totalpasivo2.'</td>
+						</tr>';
 					?>
-					<tr>
-						<td>Activo fijo neto</td>
-						<td>8,000</td>
-						<td>8,500</td>
-					</tr>
-					<tr>
-						<td>Total activo</td>
-						<td>12,500</td>
-						<td>12,900</td>
-					</tr>
-					<tr>
-						<td>Pasivo circultante</td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>Cuentas por pagar</td>
-						<td>2,500</td>
-						<td>2,600</td>
-					</tr>
-					<tr>
-						<td>Pasivo a largo plazo</td>
-						<td>7,500</td>
-						<td>7,800</td>
-					</tr>
-					<tr>
-						<td>Total pasivo</td>
-						<td>10,000</td>
-						<td>10,400</td>
-					</tr>
-					<tr>
-						<td>Patrimonio</td>
-						<td>2,500</td>
-						<td>2,300</td>
-					</tr>
-					<tr>
-						<td>Total pasivo</td>
-						<td>12,500</td>
-						<td>12,700</td>
-					</tr>
 				</tbody>
 			</table>
 		</div><br>
@@ -370,42 +545,133 @@
 				</thead>
 
 				<tbody>
-					<tr>
-						<td>Capital neto de trabajo</td>
-						<td>2,000</td>
-						<td>1,800</td>
-					</tr>
-					<tr>
-						<td>Índice de solvencia</td>
-						<td>1.8</td>
-						<td>1.692</td>
-					</tr>
-					<tr>
-						<td>Prueba ácida</td>
-						<td>1.4</td>
-						<td>1.269</td>
-					</tr>
-					<tr>
-						<td>Rotación de inventarios</td>
-						<td>5</td>
-						<td>4.667</td>
-					</tr>
-					<tr>
-						<td>Rotación de cartera</td>
-						<td>0.881</td>
-						<td>0.898</td>
-					</tr>
-					<tr>
-						<td>Rotación de cuentas por pagar</td>
-						<td>0.525</td>
-						<td>0.505</td>
-					</tr>
+					<?php  
+						//**************** FILA CAPITAL NETO DE TRABAJO *******************//
+
+						echo'
+						<tr>
+							<td>Capital neto de trabajo</td>
+							<td>'.$capitalneto.'</td>
+							<td>'.$capitalneto2.'</td>
+						</tr>';
+
+						//**************** FILA INDICE DE SOLVENCIA *******************//
+						echo'
+						<tr>
+							<td>Índice de solvencia</td>
+							<td>'.$indicesolvencia.'</td>
+							<td>'.$indicesolvencia2.'</td>
+						</tr>';
+
+
+						//**************** FILA PRUEBA ACIDA *******************//
+						echo'
+						<tr>
+							<td>Prueba ácida</td>
+							<td>'.$pruebaacida.'</td>
+							<td>'.$pruebaacida2.'</td>
+						</tr>';
+
+
+						//**************** FILA ROTACION INVENTARIOS *******************//
+						echo'
+						<tr>
+							<td>Rotación de inventarios</td>
+							<td>'.$rotacioninventario.'</td>
+							<td>'.$rotacioninventario2.'</td>
+						</tr>';
+
+
+						//**************** FILA ROTACION DE CARTERA *******************//
+						echo'
+						<tr>
+							<td>Rotación de cartera</td>
+							<td>'.$rotacioncartera.'</td>
+							<td>'.$rotacioncartera2.'</td>
+						</tr>';
+
+
+						//**************** FILA ROTACION DE CUENTAS POR PAGAR *******************//
+						echo'
+						<tr>
+							<td>Rotación de cuentas por pagar</td>
+							<td>'.$rotacioncuentasporpagar.'</td>
+							<td>'.$rotacioncuentasporpagar2.'</td>
+						</tr>';
+					?>
 				</tbody>
 			</table>
 		</div>
 
-		<div class="container divs" id="div_Endeudamiento" style="display:none;">
-			<h1>Endeudamiento</h1>
+		<div class="container divs" id="div_Endeudamiento" style="display:none;"><br>
+			<span>Mide la proporción de los activos que están financiados por terceros. Recordemos que los activos de una empresa son financiados o bien por los socios o bien por terceros (proveedores o acreedores).</span><br><br>
+
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Periodo</th>
+						<th>Primer Periodo</th>
+						<th>Segundo Periodo</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<?php  
+						//**************** FILA CAPITAL NETO DE TRABAJO *******************//
+
+						echo'
+						<tr>
+							<td>Capital neto de trabajo</td>
+							<td>'.$capitalneto.'</td>
+							<td>'.$capitalneto2.'</td>
+						</tr>';
+
+						//**************** FILA INDICE DE SOLVENCIA *******************//
+						echo'
+						<tr>
+							<td>Índice de solvencia</td>
+							<td>'.$indicesolvencia.'</td>
+							<td>'.$indicesolvencia2.'</td>
+						</tr>';
+
+
+						//**************** FILA PRUEBA ACIDA *******************//
+						echo'
+						<tr>
+							<td>Prueba ácida</td>
+							<td>'.$pruebaacida.'</td>
+							<td>'.$pruebaacida2.'</td>
+						</tr>';
+
+
+						//**************** FILA ROTACION INVENTARIOS *******************//
+						echo'
+						<tr>
+							<td>Rotación de inventarios</td>
+							<td>'.$rotacioninventario.'</td>
+							<td>'.$rotacioninventario2.'</td>
+						</tr>';
+
+
+						//**************** FILA ROTACION DE CARTERA *******************//
+						echo'
+						<tr>
+							<td>Rotación de cartera</td>
+							<td>'.$rotacioncartera.'</td>
+							<td>'.$rotacioncartera2.'</td>
+						</tr>';
+
+
+						//**************** FILA ROTACION DE CUENTAS POR PAGAR *******************//
+						echo'
+						<tr>
+							<td>Rotación de cuentas por pagar</td>
+							<td>'.$rotacioncuentasporpagar.'</td>
+							<td>'.$rotacioncuentasporpagar2.'</td>
+						</tr>';
+					?>
+				</tbody>
+			</table>
 		</div>
 
 		<div class="container divs" id="div_Rantabilidad" style="display:none;">
